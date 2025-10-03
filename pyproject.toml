@@ -10,7 +10,7 @@ readme = "README.md"
 requires-python = ">=3.11"
 license = { text = "MIT" }
 authors = [
-    { name = "VLLM MCP Team" },
+    { name = "StanleyChanH" },
 ]
 classifiers = [
     "Development Status :: 3 - Alpha",
@@ -41,9 +41,9 @@ dev = [
 ]
 
 [project.urls]
-Homepage = "https://github.com/yourusername/vllm-mcp"
-Repository = "https://github.com/yourusername/vllm-mcp"
-Issues = "https://github.com/yourusername/vllm-mcp/issues"
+Homepage = "https://github.com/StanleyChanH/vllm-mcp"
+Repository = "https://github.com/StanleyChanH/vllm-mcp"
+Issues = "https://github.com/StanleyChanH/vllm-mcp/issues"
 
 [project.scripts]
 vllm-mcp = "vllm_mcp.server:main"

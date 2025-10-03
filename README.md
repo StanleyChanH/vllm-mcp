@@ -1,6 +1,12 @@
 # VLLM MCP Server
 
+[![MIT License](https://img.shields.io/badge/License-MIT-green.svg)](https://choosealicense.com/licenses/mit/)
+[![Python 3.11+](https://img.shields.io/badge/python-3.11+-blue.svg)](https://www.python.org/downloads/)
+[![uv](https://img.shields.io/badge/uv-0.5.0+-brightgreen.svg)](https://github.com/astral-sh/uv)
+
 A Model Context Protocol (MCP) server that enables text models to call multimodal models. This server supports both OpenAI and Dashscope (Alibaba Cloud) multimodal models, allowing text-only models to process images and other media formats through standardized MCP tools.
+
+**GitHub Repository**: https://github.com/StanleyChanH/vllm-mcp
 
 ## Features
 
@@ -22,7 +28,7 @@ A Model Context Protocol (MCP) server that enables text models to call multimoda
 
 1. **Clone the repository**:
    ```bash
-   git clone <repository-url>
+   git clone https://github.com/StanleyChanH/vllm-mcp.git
    cd vllm-mcp
    ```
 
@@ -480,8 +486,8 @@ MIT License
 
 ## Support
 
-- Issues: [GitHub Issues](https://github.com/yourusername/vllm-mcp/issues)
-- Documentation: [Wiki](https://github.com/yourusername/vllm-mcp/wiki)
+- Issues: [GitHub Issues](https://github.com/StanleyChanH/vllm-mcp/issues)
+- Documentation: [Wiki](https://github.com/StanleyChanH/vllm-mcp/wiki)
 
 ## Acknowledgments
 
