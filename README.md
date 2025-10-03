@@ -16,9 +16,9 @@ A Model Context Protocol (MCP) server that enables text models to call multimoda
 
 - Python 3.11+
 - [uv](https://github.com/astral-sh/uv) package manager
-- API keys for OpenAI and/or Dashscope
+- API keys for OpenAI and/or Dashscope (阿里云)
 
-### Installation
+### Installation & Setup
 
 1. **Clone the repository**:
    ```bash
@@ -30,16 +30,31 @@ A Model Context Protocol (MCP) server that enables text models to call multimoda
    ```bash
    cp .env.example .env
    # Edit .env with your API keys
+   nano .env  # or use your preferred editor
    ```
 
-3. **Install dependencies**:
+3. **Configure API keys** (in `.env` file):
+   ```bash
+   # Dashscope (阿里云) - Required for basic functionality
+   DASHSCOPE_API_KEY=sk-your-dashscope-api-key
+
+   # OpenAI - Optional
+   OPENAI_API_KEY=sk-your-openai-api-key
+   ```
+
+4. **Install dependencies**:
    ```bash
    uv sync
    ```
 
-### Local Development
+5. **Verify setup**:
+   ```bash
+   uv run python test_simple.py
+   ```
 
-1. **Start the server** (STDIO transport):
+### Running the Server
+
+1. **Start the server** (STDIO transport - default):
    ```bash
    ./scripts/start.sh
    ```
@@ -52,6 +67,23 @@ A Model Context Protocol (MCP) server that enables text models to call multimoda
 3. **Development mode with hot reload**:
    ```bash
    ./scripts/start-dev.sh
+   ```
+
+### Testing & Verification
+
+1. **List available models**:
+   ```bash
+   uv run python examples/list_models.py
+   ```
+
+2. **Run basic tests**:
+   ```bash
+   uv run python test_simple.py
+   ```
+
+3. **Test MCP tools**:
+   ```bash
+   uv run python examples/client_example.py
    ```
 
 ### Docker Deployment
@@ -380,6 +412,59 @@ For real-time streaming responses.
 ```bash
 vllm-mcp --transport sse --host 0.0.0.0 --port 8080
 ```
+
+## Troubleshooting
+
+### Common Issues
+
+1. **Import Error: No module named 'vllm_mcp'**
+   ```bash
+   # Make sure you're in the project root and run:
+   uv sync
+   export PYTHONPATH="src:$PYTHONPATH"
+   ```
+
+2. **API Key Not Found**
+   ```bash
+   # Ensure your .env file is properly configured:
+   cp .env.example .env
+   # Edit .env with your actual API keys
+   ```
+
+3. **Dashscope API Errors**
+   - Verify your API key is valid and active
+   - Check if you have sufficient quota
+   - Ensure network connectivity to Dashscope services
+
+4. **Server Startup Issues**
+   ```bash
+   # Check for port conflicts:
+   lsof -i :8080
+
+   # Try a different port:
+   ./scripts/start.sh --port 8081
+   ```
+
+5. **Docker Issues**
+   ```bash
+   # Rebuild Docker image:
+   docker-compose down
+   docker-compose build --no-cache
+   docker-compose up -d
+   ```
+
+### Debug Mode
+
+Enable debug logging for troubleshooting:
+```bash
+./scripts/start.sh --log-level DEBUG
+```
+
+### Getting Help
+
+- Check [SETUP_GUIDE.md](SETUP_GUIDE.md) for detailed setup instructions
+- Run `uv run python test_simple.py` to verify basic functionality
+- Review logs for error messages and warnings
 
 ## License
 
