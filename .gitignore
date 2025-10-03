@@ -196,3 +196,5 @@ session_tokens.txt
 .gcp/
 service-account.json
 credentials.json
+
+.claude/

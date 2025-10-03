@@ -213,13 +213,26 @@ class MultimodalMCPServer:
                 )
 
                 # Generate response
-                loop = asyncio.new_event_loop()
-                asyncio.set_event_loop(loop)
-
                 try:
-                    response = loop.run_until_complete(
-                        self.providers[provider].generate_response(request)
-                    )
+                    # Check if we're already in an event loop
+                    try:
+                        loop = asyncio.get_running_loop()
+                        # We're already in a loop, create a task
+                        task = asyncio.create_task(
+                            self.providers[provider].generate_response(request)
+                        )
+                        # Wait for the task to complete
+                        while not task.done():
+                            asyncio.sleep(0.01)
+                        response = task.result()
+                    except RuntimeError:
+                        # No running loop, create a new one
+                        loop = asyncio.new_event_loop()
+                        asyncio.set_event_loop(loop)
+                        response = loop.run_until_complete(
+                            self.providers[provider].generate_response(request)
+                        )
+                        loop.close()
 
                     if response.error:
                         return f"Error: {response.error}"
@@ -318,13 +331,26 @@ class MultimodalMCPServer:
                     ]
                 )
 
-                loop = asyncio.new_event_loop()
-                asyncio.set_event_loop(loop)
-
                 try:
-                    is_valid = loop.run_until_complete(
-                        self.providers[provider].validate_request(request)
-                    )
+                    # Check if we're already in an event loop
+                    try:
+                        loop = asyncio.get_running_loop()
+                        # We're already in a loop, create a task
+                        task = asyncio.create_task(
+                            self.providers[provider].validate_request(request)
+                        )
+                        # Wait for the task to complete
+                        while not task.done():
+                            asyncio.sleep(0.01)
+                        is_valid = task.result()
+                    except RuntimeError:
+                        # No running loop, create a new one
+                        loop = asyncio.new_event_loop()
+                        asyncio.set_event_loop(loop)
+                        is_valid = loop.run_until_complete(
+                            self.providers[provider].validate_request(request)
+                        )
+                        loop.close()
 
                     if is_valid:
                         return f"Request is valid for provider '{provider}'"
